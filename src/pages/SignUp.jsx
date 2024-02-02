@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { db } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,18 +19,8 @@ function SignUp() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const { name, email, password } = formData;
-
-  const submitForm = (e) => {
-    e.preventDefault();
-    // if the user has not filled any input it will be red
-    // if (email) {
-    //   setNotFilled(true)
-    // }
-    console.log("name is", name);
-    console.log("email is", email);
-    console.log("password is", password);
-  };
 
   const handleChange = (e) => {
     setFormData({
@@ -31,6 +29,44 @@ function SignUp() {
     });
     // setNotFilled(false)
   };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    // if the user has not filled any input it will be red
+    // if (email) {
+    //   setNotFilled(true)
+    // }
+    console.log("name is", name);
+    console.log("email is", email);
+    console.log("password is", password);
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+
+      const user = userCredential.user;
+      console.log("user is :", user);
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      toast.success("Sign up was successful");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong with the resgistration", {
+        theme: "dark",
+      });
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <section className="relative top-24 m-0">
@@ -81,7 +117,7 @@ function SignUp() {
                 <div className="flex justify-between mb-4">
                   <p>
                     Have an account?{" "}
-                    <Link to="/sign-up" className="text-red-500 font-semibold">
+                    <Link to="/sign-in" className="text-red-500 font-semibold">
                       Sign In
                     </Link>
                   </p>
