@@ -87,7 +87,7 @@ function SignIn() {
                     )}
                   </div>
                 </div>
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between mb-4 whitespace-nowrap">
                   <p>
                     Don't have an account?{" "}
                     <Link to="/sign-up" className="text-red-500 font-semibold">
