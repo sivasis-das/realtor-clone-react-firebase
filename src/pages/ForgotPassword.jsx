@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { toast } from "react-toastify";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 function ForgotPassword() {
   // const [notFilled, setNotFilled] = useState(false)
   const [email, setEmail] = useState("");
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     // if the user has not filled any input it will be red
     // if (email) {
     //   setNotFilled(true)
     // }
 
-    console.log("email is", email);
+    // console.log("email is", email);
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Email was sent");
+    } catch (error) {
+      toast.error("Could not send reset password");
+    }
   };
 
   return (
