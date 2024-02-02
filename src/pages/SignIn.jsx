@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { toast } from "react-toastify";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,17 +13,8 @@ function SignIn() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const { email, password } = formData;
-
-  const submitForm = (e) => {
-    e.preventDefault();
-    // if the user has not filled any input it will be red
-    // if (email) {
-    //   setNotFilled(true)
-    // }
-    // console.log("email is", email);
-    // console.log("password is", password);
-  };
 
   const handleChange = (e) => {
     setFormData({
@@ -30,6 +23,31 @@ function SignIn() {
     });
     // setNotFilled(false)
   };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    // if the user has not filled any input it will be red
+    // if (email) {
+    //   setNotFilled(true)
+    // }
+    // console.log("email is", email);
+    // console.log("password is", password);
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      if (userCredential.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Bad user credential");
+    }
+  };
+
   return (
     <>
       <section className="relative top-24 m-0">
