@@ -36,9 +36,9 @@ function SignUp() {
     // if (email) {
     //   setNotFilled(true)
     // }
-    console.log("name is", name);
-    console.log("email is", email);
-    console.log("password is", password);
+    // console.log("name is", name);
+    // console.log("email is", email);
+    // console.log("password is", password);
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
@@ -51,7 +51,7 @@ function SignUp() {
       });
 
       const user = userCredential.user;
-      console.log("user is :", user);
+      // console.log("user is :", user);
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
@@ -63,7 +63,7 @@ function SignUp() {
       toast.error("Something went wrong with the resgistration", {
         theme: "dark",
       });
-      console.log(error);
+      // console.log(error);
     }
   };
 

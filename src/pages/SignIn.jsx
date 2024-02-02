@@ -19,8 +19,8 @@ function SignIn() {
     // if (email) {
     //   setNotFilled(true)
     // }
-    console.log("email is", email);
-    console.log("password is", password);
+    // console.log("email is", email);
+    // console.log("password is", password);
   };
 
   const handleChange = (e) => {

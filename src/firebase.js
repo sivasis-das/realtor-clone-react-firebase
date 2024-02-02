@@ -7,12 +7,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCwZ5w0j_9l2OcQFO7vvrvgZ1kQ1AFb_IY",
-  authDomain: "realtor-clone-reactjs-2a908.firebaseapp.com",
-  projectId: "realtor-clone-reactjs-2a908",
-  storageBucket: "realtor-clone-reactjs-2a908.appspot.com",
-  messagingSenderId: "1066950583200",
-  appId: "1:1066950583200:web:5d83984efe2330a04fbac5",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 // Initialize Firebase
@@ -23,3 +23,6 @@ export const db = getFirestore(app);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+
+
+
