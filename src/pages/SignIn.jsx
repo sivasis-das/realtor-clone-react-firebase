@@ -62,7 +62,7 @@ function SignIn() {
                   value={email}
                   onChange={handleChange}
                   placeholder="Email address"
-                  className="w-full px-4 py-2 text-xl text-gray-700 bg-white transition ease-in duration-300 focus:ring-2 outline-none rounded mb-4"
+                  className="w-full px-4 py-2 text-xl text-gray-700 bg-white transition  ease-in duration-300 focus:ring-2 outline-none rounded mb-4 shadow-md"
                 />
                 <div className="">
                   <div className="relative w-full ">
@@ -72,7 +72,7 @@ function SignIn() {
                       value={password}
                       onChange={handleChange}
                       placeholder="Password"
-                      className="w-full px-4 py-2 text-xl text-gray-700 bg-white transition ease-in duration-300 focus:ring-2 outline-none rounded mb-4"
+                      className="w-full px-4 py-2 text-xl text-gray-700 bg-white transition ease-in duration-300 focus:ring-2 outline-none rounded mb-4 shadow-md"
                     />
                     {showPassword ? (
                       <FaEyeSlash

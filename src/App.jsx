@@ -16,6 +16,7 @@ import Offers from "./pages/Offers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateListing from "./pages/CreateListing";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
       <Route path="sign-up" element={<SignUp />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="offers" element={<Offers />} />
+      <Route path="create-listing" element={<CreateListing />} />
     </Route>
   )
 );

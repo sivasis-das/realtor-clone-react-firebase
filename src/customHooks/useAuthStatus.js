@@ -10,10 +10,12 @@ export function useAuthStatus() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
-      }else{
-        setLoggedIn(false)
+      } else {
+        setLoggedIn(false);
       }
-      setCheckingStatus(false);
+      setTimeout(() => {
+        setCheckingStatus(false);
+      }, 2000);
     });
   }, []);
   return {
