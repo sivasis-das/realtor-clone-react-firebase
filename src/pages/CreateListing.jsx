@@ -1,18 +1,26 @@
 import React, { useState } from "react";
+import Spinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CreateListing() {
+  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "",
     name: "",
     beds: 1,
     baths: 1,
-    parking: "",
-    furnished: "",
+    parking: false,
+    furnished: false,
     address: "",
     description: "",
     offer: true,
     regularPrice: 0,
     discountedPrice: 0,
+    latitude: 0,
+    longitude: 0,
+    images: {}
   });
 
   const {
@@ -28,19 +36,57 @@ function CreateListing() {
     price,
     regularPrice,
     discountedPrice,
+    latitude,
+    longitude,
+    images,
   } = formData;
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("formadata", formData);
+    setLoading(true);
+    if (discountedPrice >= regularPrice) {
+      setLoading(false)
+      toast.error("Discounted price needs to be less than regular price")
+      return
+    }
+    if (images.length>6) {
+      setLoading(false)
+      toast.error("plz upload max of 6 images")
+      return
+    }  
+    let geolocation ={};
+    geolocation.lat = latitude;
+    geolocation.log = longitude;
+    
   };
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    let boolean = null;
+    if (e.target.value == "true") {
+      boolean = true;
+    }
+    if (e.target.value == "false") {
+      boolean = false;
+    }
+    if (e.target.files) {
+      setFormData((prev) => ({
+        ...prev,
+        images: e.target.files,
+      }));
+    } else if (!e.target.files) {
+      setFormData((prev) => ({
+        ...prev,
+        [e.target.name]: boolean ?? e.target.value,
+      }));
+    }
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <main className="max-w-md px-2 mx-auto">
@@ -132,7 +178,7 @@ function CreateListing() {
                 type="radio"
                 name="parking"
                 id="parkyes"
-                value="yes"
+                value={true}
                 className="peer/parkyes hidden"
                 onChange={handleChange}
                 required
@@ -147,7 +193,7 @@ function CreateListing() {
                 type="radio"
                 name="parking"
                 id="parkno"
-                value="no"
+                value={false}
                 className="peer/parkno hidden"
                 onChange={handleChange}
                 required
@@ -166,7 +212,7 @@ function CreateListing() {
                 type="radio"
                 name="furnished"
                 id="furnishedyes"
-                value="yes"
+                value={true}
                 className="peer/furnishedyes hidden"
                 onChange={handleChange}
                 required
@@ -181,7 +227,7 @@ function CreateListing() {
                 type="radio"
                 name="furnished"
                 id="furnishedno"
-                value="no"
+                value={false}
                 className="peer/furnishedno hidden"
                 onChange={handleChange}
                 required
@@ -208,6 +254,39 @@ function CreateListing() {
               required
             ></textarea>
 
+            {!geolocationEnabled && (
+              <div className="flex gap-5">
+                <div>
+                  <h3 className="font-semibold mt-6">Latitude</h3>
+                  <input
+                    type="number"
+                    name="latitude"
+                    id="latitude"
+                    value={latitude}
+                    onChange={handleChange}
+                    max={90}
+                    min={-90}
+                    className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:ring-2 outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <h3 className="font-semibold mt-6">Latitude</h3>
+                  <input
+                    type="number"
+                    name="longitude"
+                    id="longitude"
+                    value={longitude}
+                    onChange={handleChange}
+                    max={180}
+                    min={-180}
+                    className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:ring-2 outline-none"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
             <h3 className="font-semibold mt-6">Description</h3>
             <textarea
               name="description"
@@ -228,7 +307,7 @@ function CreateListing() {
                 type="radio"
                 name="offer"
                 id="offeryes"
-                value="yes"
+                value={true}
                 className="peer/offeryes hidden"
                 onChange={handleChange}
                 required
@@ -243,7 +322,7 @@ function CreateListing() {
                 type="radio"
                 name="offer"
                 id="offerno"
-                value="no"
+                value={false}
                 className="peer/offerno hidden"
                 onChange={handleChange}
                 required
@@ -260,7 +339,7 @@ function CreateListing() {
             <div>
               <input
                 type="number"
-                name="regular price"
+                name="regularPrice"
                 id="regular price"
                 value={regularPrice}
                 onChange={handleChange}
@@ -271,13 +350,13 @@ function CreateListing() {
               />
               <p>$/Month</p>
             </div>
-            {offer == "yes" ? (
+            {offer ? (
               <>
                 <h3 className="font-semibold mt-6">Discounted Price</h3>
                 <div>
                   <input
                     type="number"
-                    name="discounted price"
+                    name="discountedPrice"
                     id="discounted price"
                     value={discountedPrice}
                     onChange={handleChange}
@@ -286,6 +365,7 @@ function CreateListing() {
                     className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:ring-2 outline-none"
                     required
                   />
+                  <p>$/Month</p>
                 </div>
               </>
             ) : null}

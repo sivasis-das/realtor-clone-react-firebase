@@ -34,7 +34,14 @@ const router = createBrowserRouter(
       <Route path="sign-up" element={<SignUp />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="offers" element={<Offers />} />
-      <Route path="create-listing" element={<CreateListing />} />
+      <Route
+        path="create-listing"
+        element={
+          <PrivateRoute>
+            <CreateListing />
+          </PrivateRoute>
+        }
+      />
     </Route>
   )
 );
