@@ -1,7 +1,9 @@
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, updateProfile } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { db } from "../firebase";
 
 function Profile() {
   const auth = getAuth();
@@ -11,14 +13,39 @@ function Profile() {
     name: auth.currentUser?.displayName,
     email: auth.currentUser?.email,
   });
-  const [isEditable, setIsEditable] = useState(false);
+  const [changeDetail, setChangeDetail] = useState(false);
   const navigate = useNavigate();
 
   const { name, email } = formData;
-  console.log("auth", auth);
-  console.log("currentUser", auth.currentUser);
-  console.log("name", name);
-  console.log("email", email);
+  // console.log("auth", auth);
+  // console.log("currentUser", auth.currentUser);
+  // console.log("name", name);
+  // console.log("email", email);
+
+  const handleEdit = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+
+  const submitChange = async () => {
+    try {
+      if (auth.currentUser.displayName !== name) {
+        console.log("currentUser", auth.currentUser);
+        // update display name in the firebase auth
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        });
+        console.log("new edit", formData);
+        // update name in the firestore
+
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(docRef, {
+          name: name,
+        });
+      }
+      toast.success("Profile details successfully updated");
+    } catch (error) {
+      toast.error("Couldn't change the profile detail");
+    }
+  };
 
   const handleSignOut = async () => {
     try {
@@ -41,9 +68,10 @@ function Profile() {
               type="text"
               id="name"
               value={name}
-              readOnly={!isEditable}
+              onChange={handleEdit}
+              readOnly={!changeDetail}
               className={`w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out duration-300   outline-none mb-6 ${
-                isEditable ? "ring-2" : null
+                changeDetail ? "ring-2" : null
               }`}
             />
 
@@ -60,9 +88,12 @@ function Profile() {
                 Do want to change your name?{" "}
                 <span
                   className="text-blue-700 font-semibold cursor-pointer"
-                  onClick={(e) => setIsEditable(!isEditable)}
+                  onClick={(e) => {
+                    changeDetail && submitChange();
+                    setChangeDetail(!changeDetail);
+                  }}
                 >
-                  {isEditable ? "Save Edit" : "Edit"}
+                  {changeDetail ? "Save Edit" : "Edit"}
                 </span>
               </p>
               <p
