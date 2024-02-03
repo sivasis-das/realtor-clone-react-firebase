@@ -59,7 +59,7 @@ function Profile() {
   return (
     <>
       <section className="flex flex-col items-center max-w-6xl mx-auto">
-        <h1 className="text-3xl text-center mt-6 font-bold">My Profile</h1>
+        <h1 className="text-3xl text-center text-gray-400 mt-6 font-bold">My Profile</h1>
         <div className="w-full md:w-1/2 mt-6 px-3">
           <form>
             {/* Name Input */}

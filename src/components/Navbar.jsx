@@ -7,7 +7,7 @@ function Navbar() {
   const { loggedIn } = useAuthStatus();
   console.log("logged in is", loggedIn);
   return (
-    <div className="bg-white border-b shadow-sm sticky top-0 z-50">
+    <div className="bg-white border-b shadow-sm sticky top-0 z-40">
       <header className="flex justify-between px-3 items-start max-w-6xl mx-auto">
         <div className="self-center">
           <NavLink to="/">

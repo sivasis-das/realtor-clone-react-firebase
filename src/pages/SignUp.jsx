@@ -72,7 +72,7 @@ function SignUp() {
       <section className="relative top-24 m-0">
         <div className="flex justify-center">
           <div className="w-11/12 lg:w-9/12">
-            <h1 className="text-center text-xl uppercase ">Sign up</h1>
+            <h1 className="text-center text-gray-400 font-bold text-xl uppercase ">Sign up</h1>
             <form action="" onSubmit={submitForm}>
               <div className="my-4">
                 <input
@@ -115,7 +115,7 @@ function SignUp() {
                   </div>
                 </div>
                 <div className="flex justify-between mb-4">
-                  <p>
+                  <p className="text-gray-400">
                     Have an account?{" "}
                     <Link to="/sign-in" className="text-red-500 font-semibold">
                       Sign In
