@@ -1,7 +1,11 @@
+import { getAuth } from "firebase/auth";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useAuthStatus } from "../customHooks/useAuthStatus";
 
 function Navbar() {
+  const { loggedIn } = useAuthStatus();
+  console.log("logged in is", loggedIn);
   return (
     <div className="bg-white border-b shadow-sm sticky top-0 z-50">
       <header className="flex justify-between px-3 items-start max-w-6xl mx-auto">
@@ -41,16 +45,29 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/sign-in"
-                className={({ isActive }) =>
-                  `${
-                    isActive && "border-b-4 border-b-red-500 text-black"
-                  } hover:border-b-red-500 hover:border-b-4 py-3`
-                }
-              >
-                Sign In
-              </NavLink>
+              {loggedIn ? (
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    `${
+                      isActive && "border-b-4 border-b-red-500 text-black"
+                    } hover:border-b-red-500 hover:border-b-4 py-3`
+                  }
+                >
+                  Profile
+                </NavLink>
+              ) : (
+                <NavLink
+                  to="/sign-in"
+                  className={({ isActive }) =>
+                    `${
+                      isActive && "border-b-4 border-b-red-500 text-black"
+                    } hover:border-b-red-500 hover:border-b-4 py-3`
+                  }
+                >
+                  Sign In
+                </NavLink>
+              )}
             </li>
           </ul>
         </div>
