@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { getAuth } from "firebase/auth";
+import { v4 as uuidv4 } from "uuid";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
 function CreateListing() {
   const [geolocationEnabled, setGeolocationEnabled] = useState(false);
@@ -20,7 +30,7 @@ function CreateListing() {
     discountedPrice: 0,
     latitude: 0,
     longitude: 0,
-    images: {}
+    images: {},
   });
 
   const {
@@ -42,27 +52,7 @@ function CreateListing() {
   } = formData;
 
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("formadata", formData);
-    setLoading(true);
-    if (discountedPrice >= regularPrice) {
-      setLoading(false)
-      toast.error("Discounted price needs to be less than regular price")
-      return
-    }
-    if (images.length>6) {
-      setLoading(false)
-      toast.error("plz upload max of 6 images")
-      return
-    }  
-    let geolocation ={};
-    geolocation.lat = latitude;
-    geolocation.log = longitude;
-    
-  };
-
+  const auth = getAuth();
   const handleChange = (e) => {
     let boolean = null;
     if (e.target.value == "true") {
@@ -82,6 +72,115 @@ function CreateListing() {
         [e.target.name]: boolean ?? e.target.value,
       }));
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("formadata", formData);
+    setLoading(true);
+    if (Number(discountedPrice) >= Number(regularPrice)) {
+      setLoading(false);
+      toast.error("Discounted price needs to be less than regular price");
+      return;
+    }
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("plz upload max of 6 images");
+      return;
+    }
+    let geolocation = {};
+    geolocation.lat = latitude;
+    geolocation.log = longitude;
+
+    async function storeImage(image) {
+      return new Promise((resolve, reject) => {
+        // refere upload files/images to firebase cloud docs
+        const storage = getStorage();
+        const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+
+        const metadata = {
+          contentType: `${image.type}`,
+        };
+
+        // const storageRef = ref(storage, "images/" + image.name);
+        const storageRef = ref(storage, "images/" + filename);
+        const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            // A full list of error codes is available at
+            // https://firebase.google.com/docs/storage/web/handle-errors
+            switch (error.code) {
+              case "storage/unauthorized":
+                reject("User doesn't have permission to access the object");
+                //
+                break;
+              case "storage/canceled":
+                reject("User canceled the upload");
+                //
+                break;
+
+              // ...
+
+              case "storage/unknown":
+                reject("Unknown error occurred, inspect error.serverResponse");
+                //
+                break;
+            }
+          },
+          () => {
+            // Upload completed successfully, now we can get the download URL
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    }
+
+    const imgUrls = await Promise.all(
+      [...images].map((image) => storeImage(image))
+    ) //this here calls the storeImage and stores the images in the storage
+      .catch((error) => {
+        setLoading(false);
+        toast.error("Images not uploaded");
+        return;
+      });
+
+    //  console.log(imgUrls);
+    // console.log("completed");
+
+    // add the geoloaction & imgUrl to the formData --
+    const formDataCopy = {
+      ...formData,
+      imgUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
+    console.log("hey");
+    delete formDataCopy.images;
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+    console.log("formDatacopy", formDataCopy);
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+
+    setLoading(false);
+    toast.success("Successfully Listed");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
   if (loading) {
