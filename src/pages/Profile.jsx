@@ -1,10 +1,21 @@
 import { getAuth, signOut, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { IoHomeSharp } from "react-icons/io5";
+import Loader from "../components/Loader";
+import ListingItems from "../components/ListingItems";
 
 function Profile() {
   const auth = getAuth();
@@ -15,6 +26,8 @@ function Profile() {
     email: auth.currentUser?.email,
   });
   const [changeDetail, setChangeDetail] = useState(false);
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const { name, email } = formData;
@@ -57,6 +70,35 @@ function Profile() {
       toast.error("i can't let you go");
     }
   };
+
+  useEffect(() => {
+    async function fetchUserListings() {
+      try {
+        const listingRef = collection(db, "listings");
+        const q = query(
+          listingRef,
+          where("userRef", "==", auth.currentUser.uid),
+          orderBy("timestamp", "desc")
+        );
+        const querySnapshot = await getDocs(q);
+        let retrevedData = [];
+        querySnapshot.forEach((doc) => {
+          return retrevedData.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+        console.log("retreved data:", retrevedData);
+        setListings(retrevedData);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUserListings();
+  }, [auth.currentUser.uid]);
+
+  console.log("listitem:", listings);
   return (
     <>
       <section className="flex flex-col items-center max-w-6xl mx-auto">
@@ -117,6 +159,28 @@ function Profile() {
           </Link>
         </div>
       </section>
+      <div className="max-w-6xl px-3 mt-6 mx-auto">
+        {!loading ? (
+          <div>
+            <h2 className="text-2xl text-center text-gray-400 mt-6 font-bold">
+              My Listing
+            </h2>
+            <ul>
+              {listings?.map((listing) => (
+                <ListingItems
+                  key={listing.id}
+                  listing={listing.data}
+                  id={listing.id}
+                />
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="flex justify-center mt-7">
+            <Loader />
+          </div>
+        )}
+      </div>
     </>
   );
 }
