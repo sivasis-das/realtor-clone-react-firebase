@@ -349,8 +349,8 @@ function CreateListing() {
               placeholder="Address"
               value={address}
               onChange={handleChange}
-              className="w-full rounded shadow-md transition duration-300 ease-in-out focus:ring-2 outline-none p-2 placeholder:text-gray-500 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-              style={{ resize: "none" }}
+              className="w-full rounded shadow-md transition duration-300 ease-in-out focus:ring-2 outline-none p-2 resize-none placeholder:text-gray-500 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+              
               required
             ></textarea>
 
@@ -396,7 +396,7 @@ function CreateListing() {
               placeholder="Description"
               value={description}
               onChange={handleChange}
-              className="w-full rounded shadow-md transition duration-300 ease-in-out focus:ring-2 outline-none p-2 placeholder:text-gray-500 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+              className="w-full rounded shadow-md transition duration-300 ease-in-out focus:ring-2 outline-none p-2  resize-none placeholder:text-gray-500 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
               style={{ resize: "none" }}
               required
             ></textarea>
