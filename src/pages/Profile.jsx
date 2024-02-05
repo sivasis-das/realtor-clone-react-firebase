@@ -1,6 +1,7 @@
 import { getAuth, signOut, updateProfile } from "firebase/auth";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -99,6 +100,23 @@ function Profile() {
   }, [auth.currentUser.uid]);
 
   console.log("listitem:", listings);
+
+  const onDelete = async (ListingId) => {
+    // add a modal in future iterations search chat gpt
+    if (window.confirm("Are you sure you want to delete?")) {
+      await deleteDoc(doc(db, "listings", ListingId));
+      const updatedListings = listings.filter(
+        (listing) => listing.id !== ListingId
+      );
+      setListings(updatedListings);
+      toast.success("successfully deleted");
+    }
+  };
+
+  const onEdit = (ListingId) => {
+    navigate(`/edit-listing/${ListingId}`);
+  };
+
   return (
     <>
       <section className="flex flex-col items-center max-w-6xl mx-auto">
@@ -171,6 +189,8 @@ function Profile() {
                   key={listing.id}
                   listing={listing.data}
                   id={listing.id}
+                  onDelete={() => onDelete(listing.id)}
+                  onEdit={() => onEdit(listing.id)}
                 />
               ))}
             </ul>

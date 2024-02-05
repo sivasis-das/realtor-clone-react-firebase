@@ -2,8 +2,10 @@ import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { MdModeEdit } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
 
-function ListingItems({ listing, id }) {
+function ListingItems({ listing, id, onDelete, onEdit }) {
   //  toDate() is a firebase methode to convert the seconds timestamp to date object
   const date = listing.timestamp.toDate(); //output-- Sun Feb 04 2024 11:42:55 GMT+0530
 
@@ -38,7 +40,7 @@ function ListingItems({ listing, id }) {
               : listing.regularPrice
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            {listing.type === "rent" && "/month"}
+            {listing.type == "Rent" && "/month"}
           </p>
           <div className="flex items-center mt-[10px] space-x-3">
             <div className="flex items-center space-x-1">
@@ -56,6 +58,19 @@ function ListingItems({ listing, id }) {
           </div>
         </div>
       </Link>
+      {onEdit && (
+        <MdModeEdit
+          onClick={() => onEdit(id)}
+          className="absolute bottom-2 right-8 cursor-pointer hover:text-blue-600"
+          size={20}
+        />
+      )}
+      {onDelete && (
+        <FaTrash
+          onClick={() => onDelete(id)}
+          className="absolute bottom-2 right-2 cursor-pointer hover:text-red-600"
+        />
+      )}
     </li>
   );
 }
