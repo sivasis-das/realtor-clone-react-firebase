@@ -17,6 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
+import EditListing from "./pages/EditListing";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +40,14 @@ const router = createBrowserRouter(
         element={
           <PrivateRoute>
             <CreateListing />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="edit-listing/:listingId"
+        element={
+          <PrivateRoute>
+            <EditListing />
           </PrivateRoute>
         }
       />

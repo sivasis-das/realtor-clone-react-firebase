@@ -18,7 +18,7 @@ function ListingItems({ listing, id, onDelete, onEdit }) {
           src={listing.imgUrls[0]}
           alt="house image"
           loading="lazy"
-          className="h-[170px] resize w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
+          className=" resize w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
         />
         <p className="absolute top-2 left-2 bg-blue-600 text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg">
           {timePeriod} ago{" "}
