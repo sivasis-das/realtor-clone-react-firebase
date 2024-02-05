@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
@@ -19,14 +19,18 @@ import { FaBed } from "react-icons/fa";
 import { FaBath } from "react-icons/fa";
 import { FaParking } from "react-icons/fa";
 import { MdOutlineChair } from "react-icons/md";
+import { getAuth } from "firebase/auth";
+import Contact from "../components/Contact";
 
 register();
 function Listing() {
-  const swiperElRef = useRef(null);
+  const auth = getAuth();
   const { listingId } = useParams();
   console.log("listingId", listingId);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showContactLandlord, setShowContactLandlord] = useState(false);
+
   useEffect(() => {
     async function fetchListing() {
       const docRef = doc(db, "listings", listingId);
@@ -145,6 +149,20 @@ function Listing() {
               )}
             </div>
           </div>
+          {listing.userRef !== auth.currentUser?.uid && (
+            <div>
+              {showContactLandlord ? (
+                <Contact userRef={listing.userRef} listing={listing} />
+              ) : (
+                <button
+                  onClick={() => setShowContactLandlord(true)}
+                  className="bg-blue-600 rounded text-white font-semibold w-full hover:bg-blue-800 active:bg-blue-950 shadow-md transition duration-200 ease-in h-11 uppercase"
+                >
+                  Contact Landlord
+                </button>
+              )}
+            </div>
+          )}
         </div>
         <div className="bg-blue-300 w-full h-20 "></div>
       </div>
@@ -153,3 +171,5 @@ function Listing() {
 }
 
 export default Listing;
+
+// http://localhost:5173/category/Rent/C3FJiEZRuBrhtM9g7c3D

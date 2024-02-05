@@ -448,7 +448,7 @@ function EditListing() {
               <label
                 htmlFor="offeryes"
                 className={`${
-                  offer && "bg-gray-700 text-white"
+                  offer && "bg-slate-700 text-white"
                 } peer-checked/offeryes:bg-gray-600 peer-checked/offeryes:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 yes
@@ -464,7 +464,7 @@ function EditListing() {
               <label
                 htmlFor="offerno"
                 className={`${
-                  !offer && "bg-gray-700 text-white"
+                  !offer && "bg-gray-900 text-white"
                 } peer-checked/offerno:bg-gray-600 peer-checked/offerno:text-white flex-1 rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 no
