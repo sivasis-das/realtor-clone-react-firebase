@@ -240,7 +240,7 @@ function EditListing() {
               <label
                 htmlFor="sell"
                 className={`${
-                  type == "Sell" ? "bg-gray-600 text-white" : null
+                  type == "Sell" ? "bg-gray-700 text-white" : null
                 } peer-checked/sell:bg-gray-600 peer-checked/sell:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2 `}
               >
                 Sell
@@ -256,7 +256,7 @@ function EditListing() {
               <label
                 htmlFor="rent"
                 className={`${
-                  type == "Rent" ? "bg-gray-600 text-white" : null
+                  type == "Rent" ? "bg-gray-700 text-white" : null
                 } peer-checked/rent:bg-gray-600 peer-checked/rent:text-white flex-1 rounded bg-white shadow-md text-center uppercase font-semibold p-2 `}
               >
                 Rent
@@ -316,7 +316,7 @@ function EditListing() {
               <label
                 htmlFor="parkyes"
                 className={`${
-                  parking && "bg-gray-600 text-white"
+                  parking && "bg-gray-700 text-white"
                 } peer-checked/parkyes:bg-gray-600 peer-checked/parkyes:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 yes
@@ -332,7 +332,7 @@ function EditListing() {
               <label
                 htmlFor="parkno"
                 className={`${
-                  !parking && "bg-gray-600 text-white"
+                  !parking && "bg-gray-700 text-white"
                 } peer-checked/parkno:bg-gray-600 peer-checked/parkno:text-white flex-1 rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 no
@@ -352,7 +352,7 @@ function EditListing() {
               <label
                 htmlFor="furnishedyes"
                 className={`${
-                  furnished && "bg-gray-600 text-white"
+                  furnished && "bg-gray-700 text-white"
                 } peer-checked/furnishedyes:bg-gray-600 peer-checked/furnishedyes:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2 `}
               >
                 yes
@@ -368,7 +368,7 @@ function EditListing() {
               <label
                 htmlFor="furnishedno"
                 className={`${
-                  !furnished && "bg-gray-600 text-white"
+                  !furnished && "bg-gray-700 text-white"
                 } peer-checked/furnishedno:bg-gray-600 peer-checked/furnishedno:text-white flex-1 rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 no
@@ -448,7 +448,7 @@ function EditListing() {
               <label
                 htmlFor="offeryes"
                 className={`${
-                  offer && "bg-gray-600 text-white"
+                  offer && "bg-gray-700 text-white"
                 } peer-checked/offeryes:bg-gray-600 peer-checked/offeryes:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 yes
@@ -464,7 +464,7 @@ function EditListing() {
               <label
                 htmlFor="offerno"
                 className={`${
-                  !offer && "bg-gray-600 text-white"
+                  !offer && "bg-gray-700 text-white"
                 } peer-checked/offerno:bg-gray-600 peer-checked/offerno:text-white flex-1 rounded bg-white shadow-md text-center uppercase font-semibold p-2`}
               >
                 no
