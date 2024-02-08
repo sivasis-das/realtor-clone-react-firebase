@@ -21,6 +21,7 @@ import { FaParking } from "react-icons/fa";
 import { MdOutlineChair } from "react-icons/md";
 import { getAuth } from "firebase/auth";
 import Contact from "../components/Contact";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 register();
 function Listing() {
@@ -43,8 +44,8 @@ function Listing() {
 
     fetchListing();
   }, [listingId]);
-  console.log("listing 2", listing?.discountedPrice);
-  console.log("listing 3", listing?.regularPrice);
+  console.log("listing 2", Number(listing?.latitude));
+  console.log("listing 3", Number(listing?.longitude));
 
   if (loading) {
     return <Spinner />;
@@ -164,7 +165,20 @@ function Listing() {
             </div>
           )}
         </div>
-        <div className="bg-blue-300 w-full h-20 "></div>
+        <div className="mt-6 md:mt-0 w-full h-60 z-10 ">
+          <MapContainer center={[Number(listing.latitude), Number(listing.longitude)]} zoom={13} scrollWheelZoom={true}
+          style={{height: "100%" , width:"100%"}}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[Number(listing.latitude), Number(listing.longitude)]}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </div>
       </div>
     </main>
   );
