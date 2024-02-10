@@ -364,22 +364,20 @@ function CreateListing() {
                     id="latitude"
                     value={latitude}
                     onChange={handleChange}
-                    max={90}
-                    min={-90}
+                    
                     className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:ring-2 outline-none"
                     required
                   />
                 </div>
                 <div>
-                  <h3 className="font-semibold mt-6">Latitude</h3>
+                  <h3 className="font-semibold mt-6">Longitude</h3>
                   <input
                     type="number"
                     name="longitude"
                     id="longitude"
                     value={longitude}
                     onChange={handleChange}
-                    max={180}
-                    min={-180}
+                    
                     className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:ring-2 outline-none"
                     required
                   />

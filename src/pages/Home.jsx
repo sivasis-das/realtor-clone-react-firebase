@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Slider from "../components/Slider";
 
 function Home() {
-  return <div>Home</div>;
+  
+
+  return (
+    <>
+      <div>
+        <Slider />
+      </div>
+    </>
+  );
 }
 
 export default Home;

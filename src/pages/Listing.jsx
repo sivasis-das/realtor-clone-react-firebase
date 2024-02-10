@@ -1,12 +1,12 @@
 import { doc, getDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import { register } from "swiper/element/bundle";
-// import Swiper from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+
 
 import "swiper/css/bundle";
 import "swiper/css";
@@ -27,6 +27,7 @@ register();
 function Listing() {
   const auth = getAuth();
   const { listingId } = useParams();
+ 
   console.log("listingId", listingId);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,8 @@ function Listing() {
   console.log("listing 2", Number(listing?.latitude));
   console.log("listing 3", Number(listing?.longitude));
 
+  
+
   if (loading) {
     return <Spinner />;
   }
@@ -57,7 +60,7 @@ function Listing() {
         modules={[Navigation, Pagination, Scrollbar, A11y, EffectFade]}
         slidesPerView={1}
         navigation
-        pagination={{ type: "progressbar" }}
+        // pagination={{ type: "progressbar" }}
         effect="fade"
         autoplay={{ delay: 3000 }}
       >
@@ -165,16 +168,24 @@ function Listing() {
             </div>
           )}
         </div>
-        <div className="mt-6 md:mt-0 w-full h-60 z-10 ">
-          <MapContainer center={[Number(listing.latitude), Number(listing.longitude)]} zoom={13} scrollWheelZoom={true}
-          style={{height: "100%" , width:"100%"}}>
+        <div className="mt-6 md:mt-0 md:ml-4 w-full h-60 z-10 ">
+          <MapContainer
+            center={[Number(listing.latitude), Number(listing.longitude)]}
+            zoom={13}
+            scrollWheelZoom={true}
+            style={{ height: "100%", width: "100%" }}
+          >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={[Number(listing.latitude), Number(listing.longitude)]}>
+            <Marker
+              position={[Number(listing.latitude), Number(listing.longitude)]}
+            >
               <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
+                {listing.address}
+                <br /> <span className="text-blue-700">{listing.latitude},{" "}
+                {listing.longitude}</span>
               </Popup>
             </Marker>
           </MapContainer>
