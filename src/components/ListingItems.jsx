@@ -61,14 +61,14 @@ function ListingItems({ listing, id, onDelete, onEdit }) {
       {onEdit && (
         <MdModeEdit
           onClick={() => onEdit(id)}
-          className="absolute bottom-2 right-8 cursor-pointer hover:text-blue-600"
+          className="absolute bottom-2 right-8 cursor-pointer text-gray-400 hover:text-blue-600"
           size={20}
         />
       )}
       {onDelete && (
         <FaTrash
           onClick={() => onDelete(id)}
-          className="absolute bottom-2 right-2 cursor-pointer hover:text-red-600"
+          className="absolute bottom-2 right-2 cursor-pointer text-gray-400 hover:text-red-600"
         />
       )}
     </li>

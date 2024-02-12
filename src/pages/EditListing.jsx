@@ -236,12 +236,11 @@ function EditListing() {
                 value="Sell"
                 className="peer/sell hidden"
                 onChange={handleChange}
+                checked={type == "Sell"}
               />
               <label
                 htmlFor="sell"
-                className={`${
-                  type == "Sell" ? "bg-gray-700 text-white" : null
-                } peer-checked/sell:bg-gray-600 peer-checked/sell:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2 `}
+                className={` peer-checked/sell:bg-gray-600 peer-checked/sell:text-white flex-1  rounded bg-white shadow-md text-center uppercase font-semibold p-2 `}
               >
                 Sell
               </label>
@@ -252,6 +251,7 @@ function EditListing() {
                 value="Rent"
                 className="peer/rent hidden "
                 onChange={handleChange}
+                checked={type == "Rent"}
               />
               <label
                 htmlFor="rent"
@@ -312,6 +312,7 @@ function EditListing() {
                 value={true}
                 className="peer/parkyes hidden"
                 onChange={handleChange}
+                checked={parking}
               />
               <label
                 htmlFor="parkyes"
@@ -328,6 +329,7 @@ function EditListing() {
                 value={false}
                 className="peer/parkno hidden"
                 onChange={handleChange}
+                checked={!parking}
               />
               <label
                 htmlFor="parkno"
@@ -348,6 +350,7 @@ function EditListing() {
                 value={true}
                 className="peer/furnishedyes hidden"
                 onChange={handleChange}
+                checked={furnished}
               />
               <label
                 htmlFor="furnishedyes"
@@ -364,6 +367,7 @@ function EditListing() {
                 value={false}
                 className="peer/furnishedno hidden"
                 onChange={handleChange}
+                checked={!furnished}
               />
               <label
                 htmlFor="furnishedno"
@@ -440,6 +444,7 @@ function EditListing() {
                 value={true}
                 className="peer/offeryes hidden"
                 onChange={handleChange}
+                checked={offer}
               />
               <label
                 htmlFor="offeryes"
@@ -456,6 +461,7 @@ function EditListing() {
                 value={false}
                 className="peer/offerno hidden"
                 onChange={handleChange}
+                checked={!offer}
               />
               <label
                 htmlFor="offerno"
