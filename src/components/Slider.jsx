@@ -37,7 +37,7 @@ function Slider() {
         });
         setListings(retrevedData);
         setLoading(false);
-        console.log("retreveed Data", retrevedData);
+        // console.log("retreveed Data", retrevedData);
       } catch (error) {
         console.log(error);
       }
@@ -45,7 +45,7 @@ function Slider() {
     fetchListings();
   }, []);
 
-  console.log("listings", listings);
+  // console.log("listings", listings);
   if (loading) {
     return (
       <>
