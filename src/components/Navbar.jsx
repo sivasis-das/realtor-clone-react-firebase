@@ -41,7 +41,7 @@ function Navbar() {
                   } hover:border-b-red-500 hover:border-b-4 py-3`
                 }
               >
-                Offer
+                Offers
               </NavLink>
             </li>
             <li>

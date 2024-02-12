@@ -60,7 +60,7 @@ function Home() {
         // create query
         const q = query(
           listingsRef,
-          where("type", "==", "Rent"),
+          where("type", "==", "rent"),
           orderBy("timestamp", "desc"),
           limit(4)
         );
@@ -91,7 +91,7 @@ function Home() {
         // create query
         const q = query(
           listingsRef,
-          where("type", "==", "Sell"),
+          where("type", "==", "sell"),
           orderBy("timestamp", "desc"),
           limit(4)
         );
@@ -152,7 +152,7 @@ function Home() {
                 <h2 className="px-3 text-2xl mt-6 font-semibold">
                   Places for rent
                 </h2>
-                <Link to="/offers">
+                <Link to="/category/rent">
                   <p className="px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">
                     Show more places for rent
                   </p>
@@ -177,11 +177,11 @@ function Home() {
             <>
               <div className="m-2 mb-6">
                 <h2 className="px-3 text-2xl mt-6 font-semibold">
-                  Places for sell
+                  Places for sale
                 </h2>
-                <Link to="/offers">
+                <Link to="/category/sell">
                   <p className="px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">
-                    Show more places for sell
+                    Show more places for sale
                   </p>
                 </Link>
                 <ul className="sm:grid sm:grid-cols-2  lg:grid-cols-4">

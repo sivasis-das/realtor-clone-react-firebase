@@ -202,7 +202,7 @@ function CreateListing() {
                 type="radio"
                 name="type"
                 id="sell"
-                value="Sell"
+                value="sell"
                 className="peer/sell hidden"
                 onChange={handleChange}
                 required
@@ -217,7 +217,7 @@ function CreateListing() {
                 type="radio"
                 name="type"
                 id="rent"
-                value="Rent"
+                value="rent"
                 className="peer/rent hidden "
                 onChange={handleChange}
                 required

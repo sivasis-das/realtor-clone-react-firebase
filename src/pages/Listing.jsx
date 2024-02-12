@@ -88,7 +88,7 @@ function Listing() {
               : listing.regularPrice
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            {listing.type == "Rent" && "/month"}
+            {listing.type == "rent" && "/month"}
           </p>
           <div className="flex items-center gap-2 mb-3">
             <FaLocationDot className="text-green-700" />

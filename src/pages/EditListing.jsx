@@ -233,10 +233,10 @@ function EditListing() {
                 type="radio"
                 name="type"
                 id="sell"
-                value="Sell"
+                value="sell"
                 className="peer/sell hidden"
                 onChange={handleChange}
-                checked={type == "Sell"}
+                checked={type == "sell"}
               />
               <label
                 htmlFor="sell"
@@ -248,15 +248,15 @@ function EditListing() {
                 type="radio"
                 name="type"
                 id="rent"
-                value="Rent"
+                value="rent"
                 className="peer/rent hidden "
                 onChange={handleChange}
-                checked={type == "Rent"}
+                checked={type == "rent"}
               />
               <label
                 htmlFor="rent"
                 className={`${
-                  type == "Rent" ? "bg-gray-700 text-white" : null
+                  type == "rent" ? "bg-gray-700 text-white" : null
                 } peer-checked/rent:bg-gray-600 peer-checked/rent:text-white flex-1 rounded bg-white shadow-md text-center uppercase font-semibold p-2 `}
               >
                 Rent
