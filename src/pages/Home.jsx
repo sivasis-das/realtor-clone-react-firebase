@@ -142,9 +142,7 @@ function Home() {
               </div>
             </>
           ) : (
-            <>
-              <Loader />
-            </>
+            <></>
           )}
           {rentListings && rentListings.length > 0 ? (
             <>
@@ -169,9 +167,7 @@ function Home() {
               </div>
             </>
           ) : (
-            <>
-              <Loader />
-            </>
+            <></>
           )}
           {sellListings && sellListings.length > 0 ? (
             <>
@@ -196,9 +192,7 @@ function Home() {
               </div>
             </>
           ) : (
-            <>
-              <Loader />
-            </>
+            <></>
           )}
         </div>
       </div>

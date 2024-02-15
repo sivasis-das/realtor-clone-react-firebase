@@ -114,7 +114,7 @@ function Category() {
           )}
         </>
       ) : (
-        <p>Could not find new offers</p>
+        <p>Could not find new places for {categoryName=="rent"?"rent":"sale"}</p>
       )}
     </div>
   );
